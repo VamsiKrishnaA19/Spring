@@ -1,0 +1,89 @@
+# Spring MVC
+
+1. SpringMVC is a framework, to develop the web based application.
+2. It follows the MVC design pattern.
+3. In web.xml file, it has frontcontroller i.e. DispatcherServlet.
+
+web.xml file:
+
+<contextParam>
+	<param-name>ContextConfigLocation</param-name>
+	<param-value>/WEB-INF/applicationContext.xml</param-value>
+</contextParam>
+<servlet>
+	<servlet-name>context</servlet-name>
+	<servlet-class>ContextConfigServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+
+<servlet>
+	<servlet-name>dispatcher</servlet-name>
+	<servlet-class>DispatcherServlet</servlet-class>
+	<load-on-startup>2</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>dispatcher</servlet-name>
+	<url-pattern>*.html</url-pattern>
+</servlet-mapping>
+
+<session-config>
+	<session-timeout>30</session-timeout>
+</session-config>
+
+<welcome-file-list>
+	<welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+
+In spring, we have three containers.
+1. BeanFactory
+2. ApplicationContext
+3. WebApplicationContext
+
+Controller:
+
+The controller is an interface, and it contains only one method 
+syntax: public ModelAndView handleRequest(request,response);
+
+The following are the implementation classes of controller interface.Those are:
+1. AbstractController
+2. AbstractCommandController
+3. SimpleFormController
+
+Mappings:
+
+The frontcontroller delegates the all incoming requests to mapping. 
+It has the responsibility to map the request to specific controller to process the request.
+
+The following are the some mapping classes.Those are:
+1. BeanNameUrlHandlerMapping
+2. SimpleUrlHandlerMapping
+3. ControllerClassNameHandlerMapping
+
+ViewResolver:
+
+The viewResolver is used to map the logical view with physical view.
+This is the class to use for view mapping. i.e. InternalResourecViewResolver.
+
+<bean id="viewResolver" class="InternalResourecViewResolver">
+	<property name="viewname">
+		<value>JstlView</value>
+	</property>
+	<property name="prefix">
+		<value>/WEB-INF/view/</value>
+	</property>
+	<property name="suffix">
+		<value>.jsp</value>
+	</property>
+</bean>
+
+Annotations:
+
+Controller & Handler Mapping
+
+Now, you can use @Controller and @RequestMapping to replace the XML configuration.
+
+Controller: The controller class is no longer need to extend the base controller like AbstractController or SimpleFormController, 
+just simply annotate the class with a @Controller annotation.
+
+Handler Mapping: No more declaration for the handler mapping like BeanNameUrlHandlerMapping, ControllerClassNameHandlerMapping or 
+SimpleUrlHandlerMapping, all are replaced with a standard @RequestMapping annotation.

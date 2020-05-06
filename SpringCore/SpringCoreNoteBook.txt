@@ -1,0 +1,85 @@
+Spring Core:
+
+1. Spring is a framework to development the enterprise application.
+2. Spring core feature is Dependency Injection is called Spring IOC Container.
+
+Two ways to achieve the depency injection. Those are:
+1. Setter Injection
+2. Constructor Injection
+
+Setter is preferred, because re-assignmnet is possible.
+
+Ex:
+class Employee
+{
+  private String empname;
+  private String empno;
+   
+  public Employee(){}
+
+  public Employee(String ename, eno){
+   this.empname = ename;
+   ths.empno = eno;
+  }
+
+  setter + getter() methods.
+}
+
+<bean id="empbean" class="Employee">
+  <property name="empname">
+    <value>vamsi krishna</value>
+  </property>
+  <property name="empno">
+    <value>1286</value>
+  </property>
+</bean>
+
+This is called setter injection, the container call the employee class setter method and inject the values by using <property/>.
+
+
+<bean id="empbean" class="Employee">
+  <constructor-arg name="empname" type="java.lang.string" value="vamsikrishna"></constructor-arg>
+  <constructor-arg name="empno" type="java.lang.string" value="1286"></constructor-arg>
+</bean>
+
+This is called constructor injection.
+
+Autowiring:
+
+class Address{
+  private String colonyname;
+}
+
+Class Employee{
+  private Address address;
+}
+
+
+Here, the Employee class is dependent on Address class. How to achieve the loosely coupling by using setter injection.
+
+1. Setter injection
+
+<bean id="empbean" class="Employee">
+ <property name="address">
+  <ref bean="addbean"/>
+ </property>
+</bean>
+
+<bean id="addbean" class="Address"></bean>
+
+
+2. Autowire
+
+<bean id="empbean" class="Employee" autowire="byType">
+</bean>
+
+<bean id="addbean" class="Address"></bean>
+
+Spring supports 4 types of autowire. Those are:
+1. None
+2. byName
+3. byType
+4. default
+
+If autowire="byName" then property name should be match with bean id. Then only it will work. Or else it will throw exception.
+If autowire="byType" then it will only consider the property type should have the bean in the configuration file.
